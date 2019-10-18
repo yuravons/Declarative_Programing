@@ -1,0 +1,42 @@
+(define list_len(lambda(list)
+(cond ((eq? list '()) 0)
+(#t (+ (list_len (cdr list)) 1)))))
+
+(define parse_list (lambda(list)
+(cond ((eq? list '()) '())
+((pair? (cdr list)) (cons (car list) (parse_list (cdr list))))
+((list? (cdr list)) list)
+(#t (cons list '())))))
+
+(define show_last_element(lambda(x)
+(cond ((eq? x '()) '())
+      ((eq? (cdr x) '()) (car x))
+(#t (show_last_element (cdr x))))))
+
+(define is_list_empty(lambda(l1)
+(cond ((> (list_len l1) 0) 0)
+(#t 1))))
+
+(define has_atom(lambda(l)
+(cond ((list? l) 0)
+((pair? l) 0)
+(#t 1))))
+
+(define has_pair(lambda(l)
+(cond ((= (list_len l) 1) (pair? l))
+(#t #f))))
+
+(define main(lambda(l)
+(cond ((> (has_atom l) 0) "List consist from only one atom")
+((= (is_list_empty (parse_list l)) 1) "List is empty")
+((has_pair (parse_list l)) "Consist only one pair")
+(#t display (show_last_element (parse_list l))))))
+
+(main '((y) p c . d))
+(main '(a . b))
+(main '())
+(main '(a))
+(main 'a)
+(main '(a d b . c))
+(main '(a d (b . c) v h i))
+(main '(a d (b . c) v h i ((a))))

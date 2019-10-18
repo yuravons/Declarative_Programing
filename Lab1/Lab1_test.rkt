@@ -1,0 +1,12 @@
+(LOAD "Lab1.rkt")
+
+(QUADRAT '())
+(QUADRAT 'A)
+(QUADRAT '(A . B))
+(QUADRAT '(A B C D))
+(QUADRAT '(() ()))
+(QUADRAT '((A . B) (C . D) (E . F)))
+(QUADRAT '(A B C D . F))
+(QUADRAT '(A S D F G H J K L Q W E R))
+(QUADRAT '(A (B C) D (F E) G (H I)))
+(QUADRAT '(A S D F G H J K L Q W E R . 2))

@@ -1,0 +1,37 @@
+(DEFINE (check_list list)
+                     (cond ((eq? list '()) '())
+                           ((pair? (cdr list)) (cons (car list) (check_list (cdr list))))
+                           ((list? (cdr list)) list)
+                           (#t (cons list '()))))
+
+(DEFINE (build_list l1)
+                     (list (list (car l1)(car(cdr l1)))(cdr(cdr l1))))
+  
+(DEFINE (Func_Size list)
+                  (cond ((eq? list '()) 0)
+                        (#t (+ (Func_Size (cdr list)) 1))))
+
+(DEFINE (is_empty_list l1)
+                       (cond ((> (Func_Size l1) 0) 0)
+                             (#t 1)))
+
+(DEFINE (Func_Atom? arg)
+                 (cond ((list? arg) 0)
+                       ((pair? arg) 0)
+                       (#t 1)))
+
+(DEFINE(QUADRAT l1)
+              (cond ((> (Func_Atom? l1) 0) "Input should be a list!")
+                    ((= (is_empty_list (check_list l1)) 1) "List is empty!")
+                    ((< (Func_Size (check_list l1)) 2) "Too small")
+                    (#t (build_list (check_list l1)))))
+(QUADRAT '(a d f t))
+(QUADRAT '(s f g h g . f))
+(QUADRAT '())
+(QUADRAT '(-a . h))
+(QUADRAT '(a (s g) d (a)))
+(QUADRAT '(a))
+(QUADRAT '(a (d (d f)) (r)))
+(QUADRAT '(a (d (d f)) (r) d d t i o))
+
+
