@@ -1,0 +1,11 @@
+(load "Lab4.rkt")
+
+(func_sum_multiply '())
+(func_sum_multiply '(2))
+(func_sum_multiply '(2 3))
+(func_sum_multiply '(3 . 4))
+(func_sum_multiply '(2 3 4 f 5 (f 6)))
+(func_sum_multiply '((1 . 2) 3 (4 . 5)))
+(func_sum_multiply '(2 (3 (4 (5 (6))))))
+(func_sum_multiply '(2 1 (a b 3)))
+(func_sum_multiply '(2 1 (a b 3 5 b(b 2 (b o 3))(5 . 4) a b)))

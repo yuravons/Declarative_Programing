@@ -1,0 +1,63 @@
+;(define (multiplie a b)
+ ; (cond ((and? (is-atom? a) (is-atom? b)) (* a b))
+  ;      ((and? (is-atom? a) (eq? b '())) a)
+   ;     ((and? (is-atom? a) (is-pair? b)) (* a (multiplie (car b) (cdr b))))
+    ;    ((and? (is-atom? a) (is-list? b)) (* a (multiplie (car b) ( multiplie 1 (cdr b)))))
+     ;   (#t (multiplie (multiplie 1 a) (multiplie 1 b)))
+      ;  ))
+
+(define (and? a b)
+  (cond ((eq? a #t) (cond ((eq? b #t) #t)
+                          (#t #f)))
+        ('(#t) #f)))
+
+(define (not? a)
+  (cond ((eq? a #t) #f)
+        (#t #t)))
+
+(define (or? a b)
+  (cond ((eq? a #t) #t)
+        (#t b)))
+(define (is-pair? a)
+  (cond ((eq? a '()) #f)
+        ((is-atom? a) #f)
+        ((and? (not? (pair? (cdr a))) (not? (list? (cdr a)))) #t)
+        (#t #f)))
+
+(define (is-list? a)
+  (cond ((eq? a '()) #t)
+        ((and? (not? (is-pair? a)) (not? (is-atom? a))) #t)
+        (#t #f)))
+
+(define (is-atom? a)
+  (cond ((and? (not? (pair? a)) (not? (list? a))) #t)
+        (#t #f)))
+
+(define (reduce ls selector a)
+  (cond ((eq? ls '()) a)
+        ((is-atom? ls) (selector a ls))
+        ((or? (is-list? (car ls)) (is-pair? (car ls))) (selector (reduce (car ls) selector a) (reduce (cdr ls) selector a)))
+        (#t (selector (car ls) (reduce (cdr ls) selector a)))))
+
+(define (mul x y)
+  (cond ((not? (number? x)) y)
+        (#t (* x y))))
+
+(define (add x y)
+  (cond ((not? (number? x)) y)
+        (#t (+ x y))))
+        
+
+(define (mul-reduce x)
+  (cons(reduce x mul 1)(cons(reduce x add 1) '())))
+
+(mul-reduce '(2 3 . 4))
+(mul-reduce '((1 . 2) 3 (4 . 45)))
+(mul-reduce '(1 (2 3 4 . 45)))
+(mul-reduce '(1 2 (3 4) (4 . 1) ((((2)) 3))))
+(mul-reduce '(1 (2 (3) (4 . 0)) 45))
+(mul-reduce '(1 (2 (3) (4 . 0)) 45))
+(mul-reduce '(1 (2 (2 2 2) ((((2)))) (2 . 2)) 2 . 2))
+(mul-reduce '(()))
+(mul-reduce '(2 (3 a d 8). 4))
+(mul-reduce '(2 3 a s s . 4))
